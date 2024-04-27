@@ -7,20 +7,17 @@ class Renderer:
         screen.blit(font.render(text, True, (255, 255, 255)), (x, y))
 
     @staticmethod
-    def render_words(font, screen, words, start_x, start_y):
-        for i, word in enumerate(words):
-            text = font.render(word, True, (255, 255, 255))
-            x = start_x
-            y = start_y + i * 20
-            Renderer.render_text(font, screen, word, x, y)
-            pygame.display.flip()
-            pygame.time.wait(500)
-
-    @staticmethod
     def render_description(font, screen, description):
-        start_x = (screen.get_width() // 2 - font.size(description)[0]) // 2
-        start_y = screen.get_height() // 2
-        Renderer.render_words(font, screen, description.split(), start_x, start_y)
+        words = description.split()
+        for i, word in enumerate(words):
+            Renderer.render_text(
+                font,
+                screen,
+                word,
+                screen.get_width() // 4,
+                screen.get_height() // 2 + i * 20,
+            )
+        pygame.display.flip()
 
     @staticmethod
     def render_status(font, screen, player):
@@ -29,23 +26,28 @@ class Renderer:
 
     @staticmethod
     def render_items(font, screen, items):
-        start_x = screen.get_width() // 2
-        start_y = screen.get_height() // 4
-        for item in items:
-            Renderer.render_words(
-                font, screen, f"There is {item}".split(), start_x, start_y
+        for i, item in enumerate(items):
+            Renderer.render_text(
+                font,
+                screen,
+                f"There is {item}",
+                screen.get_width() // 2,
+                screen.get_height() // 4 + i * 20,
             )
-            start_y += 20  # Move to the next line for the next item
 
     @staticmethod
     def render_exits(font, screen, exits):
-        start_x = screen.get_width() // 2
-        start_y = screen.get_height() // 2
-        for exit in exits.values():
-            Renderer.render_words(
+        for i, exit in enumerate(exits.values()):
+            description = exit.get("description", "an exit")
+            Renderer.render_text(
                 font,
                 screen,
-                f"There is a {exit['description']}".split(),
-                start_x,
-                start_y,
+                f"There is a {description}",
+                screen.get_width() // 2,
+                screen.get_height() // 2 + i * 20,
             )
+
+    @staticmethod
+    def render_pick_up_options(screen, font, player):
+        for i, item in enumerate(player.location.items, start=1):
+            Renderer.render_text(font, screen, f"{i}. {item}", 50, 100 + i * 20)
