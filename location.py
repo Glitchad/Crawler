@@ -2,8 +2,13 @@ from renderer import Renderer
 
 
 class Location:
-    def __init__(self, name, description, items):
-        self.name, self.description, self.items = name, description, items
+    def __init__(self, name, description, items, song):
+        self.name, self.description, self.items, self.song = (
+            name,
+            description,
+            items,
+            song,
+        )
         self.exits = {}
 
     def add_exit(self, direction, location, description):

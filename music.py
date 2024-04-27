@@ -1,3 +1,5 @@
+import threading
+
 import numpy as np
 import pygame
 
@@ -7,26 +9,15 @@ def generate_tone(frequency, duration, volume=0.5, sample_rate=44100):
     return (volume * np.sin(frequency * t * np.pi)).astype(np.float32)
 
 
-def play_music():
+def play_music(frequencies):
     pygame.mixer.init()
-    pygame.mixer.set_num_channels(8)
+    duration = 0.2  # Each note lasts for half a second
 
-    frequencies = [
-        261.63,
-        293.66,
-        329.63,
-        349.23,
-        392.00,
-        440.00,
-        493.88,
-        523.25,
-    ]  # C major scale
-    duration = 0.5  # Each note lasts for half a second
+    def play_tones():
+        for f in frequencies:
+            tone = generate_tone(f, duration)
+            sound = pygame.mixer.Sound(tone.tobytes())
+            sound.play()
+            pygame.time.wait(int(duration * 1000))
 
-    for i, f in enumerate(frequencies):
-        tone = generate_tone(f, duration)
-        sound = pygame.mixer.Sound(tone.tobytes())
-        pygame.mixer.Channel(i).play(sound)
-        pygame.time.wait(
-            int(duration * 1000)
-        )  # Wait for the duration of the note before playing the next one
+    threading.Thread(target=play_tones).start()

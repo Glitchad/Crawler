@@ -22,7 +22,7 @@ def run_game():
         pygame.K_d: "east",
     }
 
-    play_music()
+    play_music(player.location.song)
 
     clock = pygame.time.Clock()
 
