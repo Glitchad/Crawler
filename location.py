@@ -13,8 +13,8 @@ class Location:
 
     def render(self, font, screen, player):
         screen.fill((0, 0, 0))
-        Renderer.render_description(font, screen, self.description)
         Renderer.render_status(font, screen, player)
         Renderer.render_items(font, screen, self.items)
+        Renderer.render_description(font, screen, self.description)
         Renderer.render_exits(font, screen, self.exits)
         pygame.display.flip()

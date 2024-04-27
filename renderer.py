@@ -1,12 +1,26 @@
+import pygame
+
+
 class Renderer:
     @staticmethod
     def render_text(font, screen, text, x, y):
         screen.blit(font.render(text, True, (255, 255, 255)), (x, y))
 
     @staticmethod
+    def render_words(font, screen, words, start_x, start_y):
+        for i, word in enumerate(words):
+            text = font.render(word, True, (255, 255, 255))
+            x = start_x
+            y = start_y + i * 20
+            Renderer.render_text(font, screen, word, x, y)
+            pygame.display.flip()
+            pygame.time.wait(500)
+
+    @staticmethod
     def render_description(font, screen, description):
-        for i, word in enumerate(description.split()):
-            Renderer.render_text(font, screen, word, 50, 50 + i * 20)
+        start_x = (screen.get_width() // 2 - font.size(description)[0]) // 2
+        start_y = screen.get_height() // 2
+        Renderer.render_words(font, screen, description.split(), start_x, start_y)
 
     @staticmethod
     def render_status(font, screen, player):
@@ -15,11 +29,23 @@ class Renderer:
 
     @staticmethod
     def render_items(font, screen, items):
-        Renderer.render_text(font, screen, f"Items: {items}", 1130, 700)
+        start_x = screen.get_width() // 2
+        start_y = screen.get_height() // 4
+        for item in items:
+            Renderer.render_words(
+                font, screen, f"There is {item}".split(), start_x, start_y
+            )
+            start_y += 20  # Move to the next line for the next item
 
     @staticmethod
     def render_exits(font, screen, exits):
-        for i, exit in enumerate(exits.values()):
-            Renderer.render_text(
-                font, screen, f"There is a {exit['description']}", 1130, 720 + i * 20
+        start_x = screen.get_width() // 2
+        start_y = screen.get_height() // 2
+        for exit in exits.values():
+            Renderer.render_words(
+                font,
+                screen,
+                f"There is a {exit['description']}".split(),
+                start_x,
+                start_y,
             )
