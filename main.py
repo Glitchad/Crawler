@@ -2,9 +2,9 @@ import sys
 
 import pygame
 
-from location import World
 from music import play_music  # Import the play_music function
-from player import Player
+from player import Player  # Import the Player class
+from world import World  # Import the World class
 
 
 def run_game():
