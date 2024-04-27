@@ -1,29 +1,25 @@
-from location_builder import LocationBuilder
+from location import Location
 
 
 class World:
     def __init__(self):
-        builder = LocationBuilder()
+        self.locations = {
+            "forest": Location("forest", "You are in a forest.", ["a rusty sword"]),
+            "cave": Location("cave", "You are in a cave.", ["a battered shield"]),
+            "cottage": Location(
+                "cottage", "You are in a cottage.", ["a gleaming potion"]
+            ),
+        }
 
-        forest = (
-            builder.with_description("You are in a forest.")
-            .with_items(["a rusty sword"])
-            .build()
+        self.locations["forest"].add_exit(
+            "west", self.locations["cottage"], "small cottage to the West"
         )
-        cave = (
-            builder.with_description("You are in a cave.")
-            .with_items(["a battered shield"])
-            .build()
+        self.locations["forest"].add_exit(
+            "north", self.locations["cave"], "dark cave to the North."
         )
-        cottage = (
-            builder.with_description("You are in a cottage.")
-            .with_items(["a gleaming potion"])
-            .build()
+        self.locations["cave"].add_exit(
+            "south", self.locations["forest"], "lush forest to the South."
         )
-
-        forest.add_exit("west", cottage, "small cottage to the West")
-        forest.add_exit("north", cave, "dark cave to the North.")
-        cave.add_exit("south", forest, "lush forest to the South.")
-        cottage.add_exit("east", forest, "lush forest to the East.")
-
-        self.locations = {forest.name: forest, cave.name: cave, cottage.name: cottage}
+        self.locations["cottage"].add_exit(
+            "east", self.locations["forest"], "lush forest to the East."
+        )
