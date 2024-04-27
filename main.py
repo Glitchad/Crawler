@@ -25,7 +25,6 @@ def run_game():
 
     while True:
         play_music()
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -44,9 +43,7 @@ def run_game():
                     picking_up = False
 
         screen.fill((0, 0, 0))
-        player.location.render(
-            font, screen, player
-        )  # Pass the player object to the render method
+        player.location.render(font, screen, player)
         if picking_up:
             for i, item in enumerate(player.location.items, start=1):
                 screen.blit(
