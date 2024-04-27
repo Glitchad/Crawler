@@ -26,4 +26,4 @@ class World:
         cave.add_exit("south", forest, "lush forest to the South.")
         cottage.add_exit("east", forest, "lush forest to the East.")
 
-        self.locations = {"forest": forest, "cave": cave, "cottage": cottage}
+        self.locations = {forest.name: forest, cave.name: cave, cottage.name: cottage}
