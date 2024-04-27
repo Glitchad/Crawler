@@ -26,9 +26,9 @@ def play_music():
     bass_frequencies = [
         f / 2 for f in frequencies
     ]  # Define frequencies for the bass notes
-    notes = [generate_wave(f, 0.5) for f in frequencies]  # Generate waves for the notes
+    notes = [generate_wave(f, 1) for f in frequencies]  # Generate waves for the notes
     bass_notes = [
-        generate_wave(f, 0.5) for f in bass_frequencies
+        generate_wave(f, 1) for f in bass_frequencies
     ]  # Generate waves for the bass notes
     music = np.vstack(
         [np.hstack(notes * 24), np.hstack(bass_notes * 24)]

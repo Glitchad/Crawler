@@ -44,21 +44,15 @@ def run_game():
                     picking_up = False
 
         screen.fill((0, 0, 0))
-        player.location.render(font, screen)
+        player.location.render(
+            font, screen, player
+        )  # Pass the player object to the render method
         if picking_up:
             for i, item in enumerate(player.location.items, start=1):
                 screen.blit(
                     font.render(f"{i}. {item}", True, (255, 255, 255)),
                     (50, 100 + i * 20),
                 )
-
-        for i, item in enumerate(player.inventory, start=1):
-            screen.blit(
-                font.render(f"{i}. {item}", True, (255, 255, 255)), (50, 800 - i * 20)
-            )
-
-        health_text = font.render(f"Health: {player.health}", True, (255, 255, 255))
-        screen.blit(health_text, (1280 - health_text.get_rect().width - 10, 10))
 
         pygame.display.flip()
 
