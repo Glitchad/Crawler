@@ -1,13 +1,15 @@
 class Location:
     def __init__(self, description, items):
-        self.description = description
-        self.items = items
-        self.exits = {}
+        self.description = description  # Description of the location
+        self.items = items  # Items present in the location
+        self.exits = {}  # Exits from the location
 
     def add_exit(self, direction, location, description):
+        # Add an exit to another location
         self.exits[direction] = {"location": location, "description": description}
 
     def render(self, font, screen):
+        # Render the location's description, exits, and items
         screen.blit(font.render(self.description, True, (255, 255, 255)), (50, 50))
         exits_text = "There lies a" + " and a".join(
             f" {exit['description']}" for direction, exit in self.exits.items()
@@ -19,13 +21,16 @@ class Location:
 
 class World:
     def __init__(self):
+        # Initialize the world with three locations: forest, cave, and cottage
         forest = Location("You are in a forest.", ["a rusty sword"])
         cave = Location("You are in a cave.", ["a battered shield"])
         cottage = Location("You are in a cottage.", ["a gleaming potion"])
 
+        # Add exits to other locations from each location
         forest.add_exit("west", cottage, "small cottage to the West")
         forest.add_exit("north", cave, "dark cave to the North.")
         cave.add_exit("south", forest, "lush forest to the South.")
         cottage.add_exit("east", forest, "lush forest to the East.")
 
+        # Store the locations in a dictionary
         self.locations = {"forest": forest, "cave": cave, "cottage": cottage}
