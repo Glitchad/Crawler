@@ -8,7 +8,7 @@ from renderer import Renderer
 from world import World
 
 
-def run_game():
+def run_game(player):
     pygame.init()
     screen = pygame.display.set_mode((1280, 800))
     world = World()
@@ -22,7 +22,7 @@ def run_game():
         pygame.K_d: "east",
     }
 
-    play_music(player.location.song)
+    play_music(player.location.song, player)  # Pass player as the second argument
 
     clock = pygame.time.Clock()
 
@@ -53,5 +53,11 @@ def run_game():
         pygame.display.flip()
 
 
+def main():
+    world = World()
+    player = Player(world.locations["cave"])
+    run_game(player)
+
+
 if __name__ == "__main__":
-    run_game()
+    main()
